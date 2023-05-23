@@ -22,7 +22,7 @@ class Mahasiswa extends Model
         'Nim',
         'Nama',
         'Tanggal_Lahir',
-        'Foto',
+        // 'Foto',
         'kelas_id',
         'Jurusan',
         'No_Handphone',

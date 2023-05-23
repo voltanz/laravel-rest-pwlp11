@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Mahasiswa;
 use App\Http\Resources\MahasiswaResource;
+use App\Http\Requests\StoreMahasiswaRequest;
 use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
@@ -15,7 +16,8 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        return MahasiswaResource::collection(Mahasiswa::paginate(3));
+        // return MahasiswaResource::collection(Mahasiswa::all());
+        return MahasiswaResource::collection(Mahasiswa::all());
     }
 
     /**
@@ -34,9 +36,19 @@ class MahasiswaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreMahasiswaRequest $request)
     {
-        //
+        return new MahasiswaResource(Mahasiswa::create(
+            [
+                'Nim' => $request->Nim,
+                'Nama' => $request->Nama,
+                'Tanggal_Lahir' => $request->Tanggal_Lahir,
+                'kelas_id' => $request->Kelas,
+                'Jurusan' => $request->Jurusan,
+                'No_Handphone' => $request->No_Handphone,
+                'Email' => $request->Email,
+            ]
+        ));
     }
 
     /**
@@ -68,9 +80,19 @@ class MahasiswaController extends Controller
      * @param  \App\Models\Mahasiswa  $mahasiswa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Mahasiswa $mahasiswa)
+    public function update(UpdateMahasiswaRequest $request, Mahasiswa $mahasiswa)
     {
-        //
+        $mahasiswa->update([
+            'Nim' => $request->Nim,
+            'Nama' => $request->Nama,
+            'featured_image' => $request->featured_image,
+            'Tanggal_Lahir' => $request->Tanggal_Lahir,
+            'Kelas' => $request->kelas_id,
+            'Jurusan' => $request->Jurusan,
+            'No_Handphone' => $request->No_Handphone,
+            'Email' => $request->Email,
+        ]);
+        return new MahasiswaResource($mahasiswa);
     }
 
     /**
@@ -81,6 +103,7 @@ class MahasiswaController extends Controller
      */
     public function destroy(Mahasiswa $mahasiswa)
     {
-        //
+        $mahasiswa->delete();
+        return response()->noContent();
     }
 }
