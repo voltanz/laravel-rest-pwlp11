@@ -101,9 +101,5 @@ class MahasiswaController extends Controller
      * @param  \App\Models\Mahasiswa  $mahasiswa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Mahasiswa $mahasiswa)
-    {
-        $mahasiswa->delete();
-        return response()->noContent();
-    }
+    
 }
